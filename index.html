@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>经费管理系统</title>
+        <script type="text/javascript" src="./script/api.js"></script>
+        <script type="text/javascript" src="./script/aui-tab.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="script/aui-toast.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/aui.css" />
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <style>
+        body {
+            background-color: white;
+            overflow-y:visible
+        }
+        .contents {
+            background-color:white;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <script>
+        //判断登录状态的逻辑
+        $.post("post/LoginState.php", {}, function (result) {
+            switch (parseInt(result)) {
+            case 1:
+                window.location.href = "main.html";
+                break;
+            case 0:
+                break;
+            }
+        });
+        </script>
+        <section class="aui-content">
+            <div class="aui-card-list">
+                <img style="height:250px ;width:100%" src="./image/dashed.png" />
+            </div>
+        </section>
+        <div  class="aui-content aui-margin-b-15" id="Mform" style='position:relative;top:-110px;margin-left:20px;margin-right:20px;border-bottom:solid 1px #CAE1FF;border-top:solid 1px #CAE1FF;border-left:solid 1px #CAE1FF;border-right:solid 1px #CAE1FF'>
+           
+        </div>
+        <div style='position:relative;top:-105px;left:10px'>
+            <div style='font-size:20px;color:#A4D3EE'>常记录,尽掌握!</div>
+            <div style='font-size:12px;margin-top:3px'>就像大自然的一次随机漫步</div>
+            <div style='font-size:12px;margin-top:3px'>记录你的点点滴滴</div>
+        </div>
+        <script>
+        
+        var toast = new auiToast({});
+       
+         $('#Mform').load("login.html");
+        </script>
+    </body>
+
+</html>

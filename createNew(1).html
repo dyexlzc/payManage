@@ -1,0 +1,314 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>项目新建</title>
+        <style>
+           [v-cloak] {
+                  display: none;
+                }
+        </style>
+    </head>
+    <body>
+        <ul v-cloak class="breadcrumb" style='background-color:#87CEFF;height:30px' id='content'>
+	        <li id='rt'><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+	        <li><a href="#">Home</a></li>
+        	<li class="active">{{ date }}</li>
+        </ul>
+        
+        <div style='margin-top:10px;margin-left:15px;margin-right:15px;display:none' id='show'>
+            <form class="bs-example bs-example-form" role="form">
+                <div class="row">
+                    <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'>
+						项目名称
+						</button>
+					</span>
+
+                            <input type="text" class="form-control">
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                     <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'>
+						项目描述
+						</button>
+					</span>
+
+                            <input type="text" class="form-control">
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                    <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'>
+						项目类型
+						</button>
+					</span>
+
+                            <select class="form-control">
+                                <option>国家级</option>
+                                <option>省部级</option>
+                                <option>市/校级</option>
+                                <option>横向</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                    <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'>
+						项目经费
+						</button>
+					</span>
+
+                            <input id='money' onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                    <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'>
+						开始时间
+						</button>
+					</span>
+
+                            <input type="text" id="startTime" class="form-control" />
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                    <div class="col-lg-6" style='margin-bottom:5px'>
+                        <div class="input-group">	<span class="input-group-btn">
+						<button class="btn btn-default" type="button" style='color:#71C671'> 
+						截止时间
+						</button>
+					</span>
+
+                            <input type="text" id="endTime" class="form-control" />
+                        </div>
+                        <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div style='margin-left:15px;margin-right:15px;position:relative;top:-10px;display:none' id='detail'>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        	<h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion"
+				         href="#collapse">
+				        <p style='text-align:center;color:#EE2C2C' id='pull'>
+				            项目经费预算
+				            <span class="glyphicon glyphicon-chevron-down" style='margin-left:3px' ></span>
+				         </p>
+			                    	</a>
+			                </h4>
+                    </div>
+                    
+                    <div id="collapse" class="panel-collapse collapse">
+                        <div class="panel-body" >
+                            <form class="bs-example bs-example-form" role="form">
+                                <div class="row">
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	1.设备费
+						                    </button>
+					                        </span>
+                                          <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	2.材料费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	3.测试化验加工费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	4.燃料动力费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	5.知识产权事务费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	6.会议/差旅/国际合作交流费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	7.劳务费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	8.专家咨询费
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6" style='margin-bottom:5px'>
+                                        <div class="input-group"> <span class="input-group-btn">
+					                        <button class="btn btn-default" type="button" style='color:#87CEFF'>
+					                        	9.其他支出
+						                    </button>
+					                        </span>
+                                             <input  onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center" id='submit'>
+        <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-ok"></span> 提交
+        </a>
+        </div>
+        <script src="./laydate/laydate.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script type="text/javascript" src="./script/api.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+        $(function () {
+            var app = new Vue({
+                el: '#content',
+                data: {
+                    date:''
+                },
+                methods: {
+
+                }
+            });
+            
+            function changeDate() {
+                var date = new Date();
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                var d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var i = date.getMinutes();
+                i = i < 10 ? ('0' + i) : i;
+                var s = date.getSeconds();
+                s = s < 10 ? ('0' + s) : s;
+                return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s;
+            };
+            var now = changeDate();
+            app.date=now;
+            setInterval(function(){
+                app.date=changeDate();
+            },1000);
+            var startTime = laydate.render({
+                elem: '#startTime',
+                type: 'datetime',
+                min: '1935-12-31 12:30:00',
+                max: '3055-12-31 12:30:00',
+                done: function (value, date, endDate) {
+                    endLayDate.config.min = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds + 1
+                    };
+                },
+            });
+            var endLayDate = laydate.render({
+                elem: '#endTime',
+                type: 'datetime',
+                min: now,
+                max: '2055-12-31 12:30:00',
+                btns: ['clear', 'confirm'], //clear、now、confirm
+                done: function (value, date, endDate) {
+                    startTime.config.max = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds - 1
+                    };
+                },
+            });
+
+            $('#show').slideDown('slow');
+            $('#money').blur(function () {
+
+            });
+            $('#detail').fadeIn(1900);
+            $('#submit').click(function(){
+                 alert('项目新建成功!');
+                 $(location).attr('href', './main.html');
+            });
+            $('#rt').click(function(){
+                $(location).attr('href', './main.html');
+            });
+            $('#pull').click(function(){
+                $(this).find('span').toggleClass('glyphicon-chevron-down');
+                $(this).find('span').toggleClass('glyphicon-chevron-up');
+            });
+        });
+        </script>
+    </body>
+
+</html>

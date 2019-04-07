@@ -1,0 +1,211 @@
+<div class="aui-card-list">
+    <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius" tapmode> <i class="aui-iconfont aui-icon-search" @click="doSearch"></i>
+
+            <input id="searchInput" type="search" placeholder="请输入项目名称" v-model="searchInput" @keyup.enter="doSearch">
+        </div>
+        <div class="aui-searchbar-cancel aui-margin-r-10" tapmod id='cancel' style='display:none'>取消</div>
+    </div>
+    <div class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10" id="hh">
+        <div class="aui-info-item">
+            <img src="img-mine/admin.png" style="width:1.5rem" class="aui-img-round" /><span class="aui-margin-l-5">{{ real }}，欢迎！</span>
+
+        </div>
+    </div>
+    <div id='list' class="aui-card-list-content">
+        <ul v-for="item,index in items" class="aui-list aui-media-list">
+            <li class="aui-list-item aui-list-item-middle" v-on:click="getID(item.id,index)">
+                <div class="aui-media-list-item-inner">
+                    <div class=" aui-margin-r-10">
+                        <div class="aui-badge" style="position:relative;top:0; left:0">{{ item.id }}</div>
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title aui-font-size-14" style='font-size:16px'>{{item.title}}</div>
+                            <div class="aui-list-item-text" style='font-size:11px'>
+                                <div class="aui-label aui-label-info">查看详情</div>
+                            </div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:11px'>
+                            <div>项目经费：{{item.money}}</div>
+                            <div>剩余经费：{{ item.restMoney }}</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id='toshow' class="aui-card-list-footer aui-text-center">查看更多</div>
+</div>
+<script src="data.js" type="text/javascript" charset="utf-8"></script>
+<script>
+mSearch = new Vue({
+    el: "#search",
+    data: {
+        searchInput: ""
+    },
+    methods: {
+        doSearch: function () {
+            //在搜索钱先将bItems恢复到items.保证每次都是完整的列表开始
+            app.$data.items = app.$data.bItems==undefined?app.$data.items:app.$data.bItems;
+            console.log(this.searchInput);
+            //在app.$data.items中查找title相似的，然后将item替换为内容，存入备份，点击取消的时候再替换为原来的列表
+            var pList = new Array();
+            app.$data.bItems = app.$data.items; //先备份
+            for (var vp in app.$data.items) {
+                //console.log(app.$data.items[vp].title);
+                if (app.$data.items[vp].title.indexOf(this.searchInput) != -1) {
+                    //如果存在和输入的字符串相似的项目名的，就替换列表
+                    pList.push(
+                        app.$data.items[vp]);
+                }
+            }
+            console.log(pList);
+            app.$data.items = pList; //将搜索的列表更新为主列表
+        }
+    }
+})
+
+$('#toshow').click(function () {
+    $('#toshow').toggle();
+
+});
+$('#searchInput').focus(function () {
+    $('#cancel').show(200);
+});
+$('#cancel').click(function () {
+    app.$data.items = app.$data.bItems; //恢复列表
+    $('#searchInput').val('');
+    $(this).hide(200);
+
+});
+
+
+app = new Vue({ //page1使用var app;page2使用var app2;如果同名将会在post到div以后覆盖对象导致无法操作
+    el: '#list',
+    data: {
+        items: [],
+        sItems: [], //搜索出来的列表
+        //bItems: [], //备份的原来的列表
+        current_id: -1, //当点击某一个确定的项目时，修改这个值，然后pgDetail读取这个值就可以获得id信息
+        current_list_id: -1, //当前点击列表的ID
+        //totalmoney:8000 , //项目总经费
+        //remainmoney:4200  //项目剩余经费
+    },
+    methods: {
+        getID: function (id) { //点击DIV后传递ID进入函数内部
+
+            // console.log(obj);//显示具体的详情页面
+            this.current_id = id; //更新item在items中的id,这个是项目的真实id
+            //this.current_list_id=oindex;//这个是列表中的客观id 
+            //console.log(this.current_list_id);
+            //由于所有项目的数据已经在首页处理完毕，
+            // var newattr="<div>"+
+            // "<i >新建</i>";
+            // $.get("addattr.html", {}, function (result) {
+            //   $("#toggle").html(result); //获得首页
+            // });
+            $.get("pgDetail.html", function (result) {
+                $("#detail").html(result); //获得首页
+                $("#content").hide();
+                $("#detail").show(); //切换页面
+                $('#new').hide('slow');
+                $('#newattr').show('slow');
+            });
+        },
+        calRest: function () {
+            //计算每个项目的剩余经费\
+            //计算剩余经费
+            console.log("正在计算剩余经费");
+
+            //计算每个项目单独剩余经费
+            for (var vp in app.$data.items) { //选择每个项目
+                //console.log(vp)
+                //console.log(app.$data.items[vp].costType)
+                var mlist = JSON.parse(app.$data.items[vp].costType) //选择每一类的详细开支，全部加起来
+                //console.log(mlist);
+                var proHadcost = 0; //每个项目单的的用的经费
+                for (var vp2 in mlist) {
+                    proHadcost += parseInt(mlist[vp2].hadcost == undefined ? 0 : mlist[vp2].hadcost);
+                    //mCount+=mlist[vp2].hadcost;
+                }
+                app.$data.items[vp].proHadcost = proHadcost; //添加项目已用经费
+                app.$data.items[vp].restMoney = app.$data.items[vp].money - proHadcost;
+            }
+
+            //总的剩余经费，在pg2显示
+            var mCount = 0;
+            for (var vp in app.$data.items) { //选择每个项目
+                var mlist = JSON.parse(app.$data.items[vp].costType) //选择每一笔详细开支，全部加起来
+                for (var vp2 in mlist) {
+                    // console.log(mlist[vp2].hadcost)
+                    mCount += mlist[vp2].hadcost == undefined ? 0 : mlist[vp2].hadcost;
+                }
+
+            }
+            // console.log("已用经费"+mCount);
+            //计算总经费
+            var mAllCount = 0;
+
+            for (var vp in app.$data.items) { //选择每个项目
+                mAllCount += parseInt(app.$data.items[vp].money);
+            }
+            app2.$data.moneyLeft = mAllCount - mCount;
+
+            app2.$data.totalpro = app.$data.items.length; //设置总的项目数
+        }
+    }
+});
+hh = new Vue({
+    el: "#hh",
+    data: {
+        real: ""
+    }
+})
+//1.获取当前用户的project
+$.post("post/project/Get_project.php", function (result) {
+    var nowDate = new Date(); //今天的日期
+    var day = 60; //提前提示日期
+    var totalP = JSON.parse(result);
+    hh.$data.real = totalP.name;
+    app.$data.items = totalP.plist;
+
+    app.calRest();//计算剩余经费
+    //异步获取工程信息
+    //如果工程小于等于5则不显示查看更多，否则显示
+    //将pg2中的预警列表更新：结题时间+60>今天即认为是结题
+    var warnlists = new Array(); //预警项目
+
+    var finishpro = new Array(); //结题项目
+    for (var vp in app.$data.items) {
+        var subProject = app.$data.items[vp];
+        var overData = strToDate(subProject.over_time); //项目结束的日期
+
+        var value = overData.getTime(); //将时间转为毫秒  
+        value -= day * (24 * 3600 * 1000); //将天数转换成毫秒后与开始时间相加得到结束时间的毫秒数         
+        var endDate = new Date(value); //将得到的毫秒数转换为日期
+
+        if (overData <= nowDate) { //如果项目结束的时间大于今天，说明结题
+            console.log("结题：" + subProject.id + "-" + subProject.title + ":" + subProject.over_time);
+            finishpro.push({
+                "id": subProject.id,
+                "title": subProject.title,
+            });
+        } else if (endDate < nowDate) { //如果今天的日期+60大于结束时间，就提示预警
+            console.log("预警：" + subProject.id + "-" + subProject.title + ":" + subProject.over_time);
+            warnlists.push({
+                "id": subProject.id,
+                "title": subProject.title,
+            })
+        }
+    }
+    app2.$data.finishpro = finishpro.length; //更新结题项目
+    app2.$data.warnlists = warnlists; //更新预警列表
+    app2.$data.warnpro = warnlists.length; //更新预警长度
+    //app2.$data.couponSelected=warnlists[0].id;
+    console.log(app.$data);
+
+
+
+});
+</script>

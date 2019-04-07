@@ -1,0 +1,120 @@
+<div id='changepasswd' style='margin-right:5px'>
+    <div class="aui-content aui-margin-b-20">
+        <ul class="aui-list aui-form-list">
+            <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input"> <i class="aui-iconfont aui-icon-my">：</i>
+
+                        <input @blur="inputsu()" v-model='userinfo' placeholder="请在此输入您的手机号" class="form-control" style='border:solid 1px #FAF0E6;width:80%' />
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6;padding-top:10px;padding-bottom:10px;height:40px'>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input"> <i style='float:left;width:20%;position:relative;top:-7px' class="aui-iconfont aui-icon-info">：</i>
+
+                        <select v-model='question' class="form-control" style='border:solid 1px #FAF0E6;float:left;width:80%;position:relative;left:-21px;height:28px;top:-10px'>
+                            <option>请选择您的二级密保问题</option>
+                            <option>您的生日是？</option>
+                            <option>您的最好儿时朋友是？</option>
+                            <option>您的印象最深的人是？</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input"> <i class="aui-iconfont aui-icon-pencil">：</i>
+
+                        <input v-model='answer' placeholder="请输入您的二级密码问题答案" class="form-control" style='border:solid 1px #FAF0E6;width:80%' />
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6;display:none' id='newps'>
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-input"> <i class="aui-iconfont aui-icon-lock">：</i>
+
+                        <input v-model='newpasswd' placeholder="请在此输入您的新密码" class="form-control" style='border:solid 1px #FAF0E6;width:80%' />
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                    <div @click='submit()' class="aui-btn aui-btn-info aui-margin-r-5" style="height:35px;width:70px;font-size:20px">提交</div>
+                    <div @click='reback()' class="aui-btn aui-btn-danger aui-margin-l-5" style="height:35px;width:70px;font-size:20px">返回</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+var chpw = new Vue({
+    el: '#changepasswd',
+    data: {
+        userinfo: '', //用户手机号 找回密码所用
+        question: '请选择您的二级密保问题', //二级密保问题
+        answer: '', //用户输入答案
+        newpasswd: '', //用户输入新密码
+        realanswer: '' //二级密保标准答案,已经加密
+    },
+    methods: {
+        inputsu: function () {
+            //此时用户已经输完账号 可以查询返回密码
+            $.post("post/getAnswer.php", {
+                number: this.userinfo
+            }, function (result) {
+                chpw.$data.realanswer = result;
+            })
+        },
+
+        reback: function () {
+            $('#Mform').load("login.html");
+        },
+        submit: function () {
+
+            $.post("post/chPwd.php", {
+                ans: this.answer,
+                number:this.userinfo,
+                newPwd:this.newpasswd
+            }, function (result) {
+                mRes=result;
+                $.post("post/mXXtea.php", {str:chpw.$data.answer}, function (result2) {//加密原始字符串
+                    if (result2 == chpw.$data.realanswer) {
+                        if(mRes=="ok"){
+                            alert('您已成功修改密码!');
+                            $('#Mform').load("login.html");
+                        }
+                        else{
+                            alert('修改失败');
+                        }
+                    } else {
+                        alert('请输入您的答案！');
+                    }
+                })
+                 
+               
+            })
+
+            }
+        },
+        watch: {
+            question: function (val) {
+                //val为选择的二级密保问题
+            },
+            answer: function (value) {
+                $.post("post/mXXtea.php", {
+                    str: this.answer
+                }, function (result) {
+                    if (result == chpw.$data.realanswer) {
+                        $('#newps').slideDown('slow');
+                        console.log("成功");
+                    }else{
+                        $('#newps').slideUp('slow');
+                    }
+                })
+            }
+
+        }
+
+    });
+</script>

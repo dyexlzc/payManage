@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>经费系统注册</title>
+        <script type="text/javascript" src="./script/api.js"></script>
+        <script type="text/javascript" src="./script/aui-tab.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script type="text/javascript" src="script/aui-toast.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/aui.css" />
+        <style>
+            body{
+                 background-image: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552405059028&di=dfabfa9ed92fddeec5948baa6f201769&imgtype=0&src=http%3A%2F%2Fimg3.redocn.com%2Ftupian%2F20140917%2Fshouhuichengshichahuabeijing_3084849.jpg");
+	            background-repeat: no-repeat;
+            	background-position: center 0;
+	            background-attachment:fixed;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div>
+          <div id='ani' style="opacity:0; display:flex;
+    justify-content:center;position:relative;top:125px">
+          <section class="aui-content" id="Mform">
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-form-list">
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                             <i class="aui-iconfont aui-icon-my" style='margin-right:8px'></i>
+                            <div class="aui-list-item-label">真实姓名：</div>
+                            <div class="aui-list-item-input">
+                                <input type="text" v-model="real">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <i class="aui-iconfont aui-icon-phone" style='margin-right:8px'></i>
+                            <div class="aui-list-item-label">电话号码：</div>
+                            <div class="aui-list-item-input">
+                                <input type="number"  v-model="number">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <i class="aui-iconfont aui-icon-lock" style='margin-right:8px'></i>
+                            <div class="aui-list-item-label">密码：</div>
+                            <div class="aui-list-item-input">
+                                <input type="password" v-model="pwd">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <i class="aui-iconfont aui-icon-home" style='margin-right:3px'></i>
+                            <div class="aui-list-item-label">所属单位：</div>
+                            <div class="aui-list-item-input">
+                                <select v-model="company" id='univers'>
+                                    <option value="1" selected>石河子大学</option>
+                                    <!--<option value="2">西安电子科技大学</option>-->
+                                    <!--<option value="3">清华大学</option>-->
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                     <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <i class="aui-iconfont aui-icon-paper" style='margin-right:3px'></i>
+                            <div class="aui-list-item-label">所属部门：</div>
+                            <div class="aui-list-item-input">
+                                <select v-model="component">
+                                    <option value="10">化学化工学院</option>
+                                    <option value="11">机械电气工程学院</option>
+                                    <option value="12">水利建筑工程学院</option>
+                                    <option value="13">信息科学与技术学院</option>
+                                    <option value="14">农学院</option>
+                                    <option value="15">动物科技学院</option>
+                                    <option value="16">医学院</option>
+                                    <option value="17">药学院</option>
+                                    <option value="18">生命科学学院</option>
+                                    <option value="19">理学院</option>
+                                    <option value="20">经济与管理学院</option>
+                                    <option value="21">师范学院、兵团教育学院</option>
+                                    <option value="22">文学艺术学院</option>
+                                    <option value="23">马克思主义学院</option>
+                                    <option value="24">外国语学院</option>
+                                    <option value="25">体育学院</option>
+                                    <option value="26">商学院</option>
+                                    <option value="27">科技学院</option>
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                            <i class="aui-iconfont aui-icon-pencil" style='margin-right:3px'></i>
+                            <div class="aui-list-item-label">二级密保：</div>
+                            <div class="aui-list-item-input">
+                                <select v-model="mibao" id='univers'>  
+                                    <option>您的生日是？</option>
+                                    <option>您的最好儿时朋友是？</option>
+                                    <option >您的印象最深的人是？</option>
+                                    <!--<option value="2">西安电子科技大学</option>-->
+                                    <!--<option value="3">清华大学</option>-->
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner">
+                             <i class="aui-iconfont aui-icon-pencil" style='margin-right:4px'></i>
+                            <div class="aui-list-item-label">您的答案：</div>
+                            <div class="aui-list-item-input">
+                                <input type="text" v-model="answer">
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="aui-list-item">
+                        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                            <div class="aui-btn aui-btn-info aui-margin-r-5" v-on:click="submit" style="height:35px;width:70px;font-size:20px">提交</div>
+                            <div class="aui-btn aui-btn-danger aui-margin-l-5" v-on:click="goback" style="height:35px;width:70px;font-size:20px">返回</div>
+                        </div>
+                    </li>
+                    <!--<li class="aui-list-item">-->
+                    <!--    <div>{{ company }}</div>-->
+                    <!--    <div>{{ component }}</div>-->
+                    <!--</li>-->
+                </ul>
+           
+            </div>
+        </section>
+        </div>
+        <script>
+        $('#ani').animate({
+            opacity:0.8
+        },"slow"); 
+        var toast = new auiToast({});
+        var vm = new Vue({
+            el: "#Mform",
+            data: {
+                real: "",
+                pwd: "",
+                number: "",
+                company: "",
+                component:"",
+                mibao:'',
+                answer:''
+            },
+            methods: {
+                submit: function () {
+                    //提交注册,注册后端路径为  post/register.php,参数列表为 real真实姓名  number电话号码  pwd密码  company单位，经过后端加密后存入数据库
+                    if (this.real == "" || this.company == "" || this.pwd == "" || this.number == ""||this.component == "") {
+                        console.log("请填写完整信息");
+                        toast.fail({
+                            title: "请填写完整信息",
+                            duration: 2000
+                        });
+                    } else
+                        $.post("post/register.php", {
+                            real: this.real,
+                            number: this.number,
+                            pwd: this.pwd,
+                            company: this.company,
+                            component: this.component,
+                            answer:this.answer
+                        }, function (result) {
+                            switch (parseInt(result)) {
+                            case -1:
+                                console.log("手机号码重复");
+                                toast.fail({
+                                    title: "手机号码重复",
+                                    duration: 2000
+                                });
+                                break;
+                            case 1:
+                                toast.success({
+                                    title: "注册成功,进入系统",
+                                    duration: 1000
+                                });
+                                console.log("注册成功");
+                                window.location.href = "main.html"; //返回登录
+                            }
+                        });
+                },
+                goback: function () {
+                    window.location.href = "index.html"; //返回登录
+                }
+            }
+        })
+        </script>
+    </body>
+
+</html>

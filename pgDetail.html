@@ -1,0 +1,372 @@
+<div style='margin:10px' id='detail'>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-media-list" id='lists'>
+            <li class="aui-list-item aui-list-item-arrow" style='border-bottom:solid 1px #E8E8E8'>
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" v-text="'项目组长:'+headman"></div>
+                            <div style='position:relative;left:-10px' class="aui-list-item-right" v-text="'起始日期:'+startdate"></div>
+                        </div>
+                        <div class="aui-list-item-text aui-ellipsis-2">&nbsp;
+                            <div style='position:relative;left:-10px' class="aui-list-item-right" v-text="'截止日期:'+enddate"></div>
+                        </div>
+                        <div class="aui-list-item-text aui-ellipsis-2">项目描述：{{des}}</div>
+                        <div class="aui-list-item-text aui-ellipsis-2">项目级别：{{level}}</div>
+                    </div>
+                </div>
+            </li>
+            <template v-for='pro,proindex in prolists'>
+                <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8;margin-bottom:30px'>
+                    <div class="aui-media-list-item-inner">
+                        <div class="aui-list-item-media">
+                            <img src="./image/1.jpg" class='aui-img-round'>
+                        </div>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-text">
+                                <div class="aui-list-item-title" style='font-weight:bold'>{{pro.title}}</div>
+                                <div class="aui-list-item-right" v-text="'预算:'+pro.premoney"></div>
+                            </div>
+                            <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{pro.hadcost}}</div>
+                            <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{pro.premoney-pro.hadcost}}</div>
+                        </div>
+                    </div>
+                    <div class="aui-info" style="padding-top:0" @click='showdetail(proindex)'>
+                        <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                        </div>
+                        <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                    </div>
+                    <div class="aui-content aui-margin-b-15" style='display: none;padding-bottom: 50px;' v-bind:id="'list_'+proindex">
+                        <template v-for="cost,costindex in pro.costlists">
+                            <ul class="aui-list aui-list-in" :id="'pro_'+proindex+'_costlist_'+costindex">
+                                <li class="aui-list-header" style='font-weight:bold'>
+                                    <div>开支记录{{costindex+1}}</div> <i v-bind:id="'edit_'+proindex+'_'+costindex" class="aui-iconfont aui-icon-edit" @click='editcost(proindex,costindex)'></i>
+
+                                </li>
+                                <li class="aui-list-item">
+                                    <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+
+                                        <div style='inline-block;font-size:11px'>&nbsp;开支时间：</div>
+                                        <div style='margin-left:5px;font-size:11px;inline-block'>
+                                            <input v-bind:id="'input1_'+proindex+'_'+costindex" readOnly="readonly" style='margin-left:5px;font-size:11px' type="text" v-model='cost.time'>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="aui-list-item">
+                                    <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+
+                                        <div style='inline-block;font-size:11px'>&nbsp;开支记录：</div>
+                                        <div style='margin-left:5px;font-size:11px;inline-block'>
+                                            <input v-bind:id="'input2_'+proindex+'_'+costindex" readOnly="readonly" style='margin-left:5px;font-size:11px' type="text" v-model='cost.summary'>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="aui-list-item">
+                                    <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+
+                                        <div style='inline-block;font-size:11px'>&nbsp;开支金额：</div>
+                                        <div style='margin-left:5px;font-size:11px;inline-block'>
+                                            <input v-bind:id="'input3_'+proindex+'_'+costindex" readOnly="readonly" style='margin-left:5px;font-size:11px' type="text" v-model='cost.money'>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                        <div @click='hidedetail(proindex)' style='height:50px;display:flex;justify-content:center;background-color:#48D1CC'><i class="aui-iconfont aui-icon-top"></i>
+                        </div>
+                    </div>
+                </li>
+            </template>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8;margin-top:5px'>
+                <div class="aui-media-list-item-inner" style='height:80px;display:flex;justify-content:center'>
+                    <img @click="cancelitem" style='height:40px;width=:40px' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552481878191&di=fdc739aba406ce96475b38a8f7b6e19d&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F87%2F20%2F58dafaf531804_610.jpg"
+                    class='aui-img-round'>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="./script/aui-dialog.js"></script>
+<script>
+var dialog = new auiDialog({});
+console.log(app.$data.items);
+iProject = [];
+current_list_id = -1;
+for (var vp in app.$data.items) { //使用current_id:项目的客观id，找到相应的Project实例
+    if (app.$data.items[vp].id == app.$data.current_id) {
+        iProject = app.$data.items[vp];
+        ChangeTitle(iProject.title);
+        current_list_id = vp;
+        break;
+    }
+} //获取单独的project实例,不用var隐士声明的全局变量
+
+
+$("#btnBack").toggle(); //显示返回按钮
+detail = new Vue({
+    el: '#detail',
+    data: {
+        prolists: [ //该项目总列表
+
+                /*{ //第一个开支类型
+                title: '差旅费',
+                premoney: 1200, //预算金额
+                hadcost: 700, //已经开支
+                costlists: [
+                    {
+                        money: '1200', //花费金额
+                        time: '2019-03-01 12:30:00', //花费时间
+                        summary: '......', //花费备注
+
+                    },
+                    {
+                        money: '800', //花费金额
+                        time: '2019-03-04 12:30:00', //花费时间
+                        summary: '......', //花费备注
+
+                    }
+                ]
+           },*/
+
+        ],
+        headman: hh.$data.real, //项目负责人
+        startdate: iProject.create_time, //起始日期
+        enddate: iProject.over_time, //截止日期 
+        des: iProject.Mdescribe, //项目描述
+        level: iProject.type, //项目级别
+
+    },
+    computed: {
+
+
+    },
+    methods: {
+        computeValue: function () { //计算剩余经费等,遍历所有项目并且计算
+            //已经花费：hadcost
+            for (var vo in this.prolists) { //循环每个经费种类
+                var mHadCost = 0;
+                for (var vp in this.prolists[vo].costlists) { //循环每个明细
+                    mHadCost += parseInt(this.prolists[vo].costlists[vp].money);
+                }
+                this.prolists[vo].hadcost = mHadCost;
+            }
+
+
+        },
+        showdetail: function (proindex) {
+            /*$('#lists').children('li').eq(proindex+1).hide();
+            console.log(proindex);*/
+            $('#list_' + proindex).slideDown('slow');
+
+        },
+        hidedetail: function (proindex) {
+            /*$('#lists').children('li').eq(proindex+1).find('.aui-content').first().slideUp('slow')
+             console.log(proindex);*/
+            $('#list_' + proindex).slideUp('slow');
+        },
+        editcost: function (proindex, costindex) { //proid为项目id,index为该开支类型的第几个记录
+            console.log("项目编号:" + app.$data.current_id);
+            console.log("开支类别编号:" + proindex);
+            console.log("具体开支编号:" + costindex);
+            var thatel = $("#" + 'edit_' + proindex + '_' + costindex); //找到id元素
+            thatel.toggleClass('aui-icon-edit');
+            thatel.toggleClass('aui-icon-correct')
+            //更换icon
+
+            if (thatel.attr('class') == "aui-iconfont aui-icon-correct") { //如果处在编辑状态
+                //更换图标列表后，将属性设置为可编辑
+                $("#" + 'input1_' + proindex + '_' + costindex).removeAttr('readOnly', 'readonly');
+                $("#" + 'input2_' + proindex + '_' + costindex).removeAttr('readOnly', 'readonly');
+                $("#" + 'input3_' + proindex + '_' + costindex).removeAttr('readOnly', 'readonly');
+                laydate.render({ //渲染日历对象
+                    elem: "#" + 'input1_' + proindex + '_' + costindex,
+                    type: 'datetime',
+                    min: '1935-12-31 12:30:00',
+                    max: '3055-12-31 12:30:00',
+                    done: function (date) {
+                        console.log(date);
+                        detail.$data.prolists[proindex].costlists[costindex].time = date; //必须手动更新vm中的值，否则他不会watch到
+                    }
+                });
+
+            } else {
+                alert("完成编辑");
+                //在完成编辑的地方提交后台进行更改
+                // console.log($("#"+'input1_'+proindex+'_'+costindex).val());//prolists中已经更新
+                detail.computeValue(); //更新经费值
+                //计算每个项目的经费值，也是调用成员函数
+                $.post("post/updateDetail.php", {
+                    pJson: JSON.stringify(this.prolists),
+                    pId: app.$data.current_id
+                }, function (result) { //提交到后台，更新数据
+                })
+                //从后台重新获取当前用户的project,目的也是为了更新信息
+                $.post("post/project/Get_project.php", function (result) {
+                    var totalP = JSON.parse(result);
+                    //hh.$data.real=totalP.name;
+                    app.$data.items = totalP.plist;
+                    //计算剩余经费
+                    for (var vp in app.$data.items) {
+                        var mSonProject = 0; //统计子项目每一笔明细的经费
+                        //console.log(vp+"号项目");
+                        //console.log(app.$data.items[vp].costType);
+                    }
+                    console.log("更新开支列表");
+                    app.calRest(); //更新首页的项目剩余经费
+                    //console.log(app.$data.items.length);
+                    //异步获取工程信息
+                    //如果工程小于等于5则不显示查看更多，否则显示
+                    //console.log("before")    
+                    //console.log(iProject.costType);
+                    for (var vp in app.$data.items) { //使用current_id:项目的客观id，找到相应的Project实例
+                        if (app.$data.items[vp].id == app.$data.current_id) {
+                            iProject = app.$data.items[vp];
+                            //ChangeTitle(iProject.title);
+                            break;
+                        }
+                    }
+                });
+                $("#" + 'input1_' + proindex + '_' + costindex).attr('readOnly', 'readonly');
+                $("#" + 'input2_' + proindex + '_' + costindex).attr('readOnly', 'readonly');
+                $("#" + 'input3_' + proindex + '_' + costindex).attr('readOnly', 'readonly');
+            }
+
+
+
+
+
+
+            /*thatel.find('i').eq(0).toggleClass('aui-icon-edit');
+           thatel.find('i').eq(0).toggleClass('aui-icon-correct');
+           if(thatel.find('i').eq(0).attr('class') =="aui-iconfont aui-icon-correct"){
+               thatel.find('input').removeAttr("readOnly");
+                var costTime = laydate.render({
+                elem: '.timeinput',
+                type: 'datetime',
+                min: '1935-12-31 12:30:00',
+                max: '3055-12-31 12:30:00',
+                done: function (value, date, endDate) {
+                    endCostDate.config.min = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds + 1
+                    };
+                },
+            });
+            var endCostDate = laydate.render({
+                elem: '#endCostTime',
+                type: 'datetime',
+                min: now,
+                max: '2099-12-31 12:30:00',
+                btns: ['clear', 'confirm'], //clear、now、confirm
+                done: function (value, date, endDate) {
+                    costTime.config.max = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds - 1
+                    };
+                },
+            });
+           }
+           else
+               thatel.find('input').attr('readOnly','readonly');*/
+        },
+        cancelitem: function () {
+            var rs = confirm("您确定要删除此项目吗？");
+            if (rs) {
+                //往后台提交删除请求
+                $.post("post/project/Del_project.php", {
+                    pId: app.$data.current_id
+                }, function (result) {
+                    if (result == "ok") {
+                        alert("您已经成功删除此项目!");
+                        app.$data.items.splice(current_list_id, 1);
+                        detail.computeValue(); //更新经费值
+                        //计算每个项目的经费值，也是调用成员函数
+                        $.post("post/updateDetail.php", {
+                            pJson: JSON.stringify(this.prolists),
+                            pId: app.$data.current_id
+                        }, function (result) { //提交到后台，更新数据
+                        })
+                        //从后台重新获取当前用户的project,目的也是为了更新信息
+                        $.post("post/project/Get_project.php", function (result) {
+                            var totalP = JSON.parse(result);
+                            //hh.$data.real=totalP.name;
+                            app.$data.items = totalP.plist;
+                            //计算剩余经费
+                            for (var vp in app.$data.items) {
+                                var mSonProject = 0; //统计子项目每一笔明细的经费
+                                //console.log(vp+"号项目");
+                                //console.log(app.$data.items[vp].costType);
+                            }
+                            console.log("更新开支列表");
+                            app.calRest(); //更新首页的项目剩余经费
+                            //console.log(app.$data.items.length);
+                            //异步获取工程信息
+                            //如果工程小于等于5则不显示查看更多，否则显示
+                            //console.log("before")    
+                            //console.log(iProject.costType);
+                            for (var vp in app.$data.items) { //使用current_id:项目的客观id，找到相应的Project实例
+                                if (app.$data.items[vp].id == app.$data.current_id) {
+                                    iProject = app.$data.items[vp];
+                                    //ChangeTitle(iProject.title);
+                                    break;
+                                }
+                            }
+                        });
+                        $("#btnBack").toggle(); //按下就表示返回到首页，pgDetail隐藏
+                        $("#detail").hide(); //切换页面
+                        $("#content").show();
+                        $('#new').show('slow');
+                        $('#newattr').hide('slow');
+                        ChangeTitle("项目列表");
+                    } else {
+                        alert("删除失败");
+                    }
+                })
+
+
+            }
+        }
+    }
+
+});
+detail.$data.startdate = detail.$data.startdate.substring(0, 10);
+detail.$data.enddate = detail.$data.enddate.substring(0, 10);
+//根据后台返回的json生成详情经费列表
+
+function getDetailList() {
+    //detail.$data.prolists=eval(iProject.costType);
+    //console.log(JSON.parse(iProject.costType));
+    detail.$data.prolists = JSON.parse(iProject.costType);
+    console.log("解析的JSON开支列表对象");
+    console.log(detail.$data.prolists);
+    //顺便计算出经费剩余
+    detail.computeValue();
+}
+
+function nowDate() {
+    var date = new Date();
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    h = h < 10 ? ('0' + h) : h;
+    var i = date.getMinutes();
+    i = i < 10 ? ('0' + i) : i;
+    var s = date.getSeconds();
+    s = s < 10 ? ('0' + s) : s;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s;
+};
+var now = nowDate();
+getDetailList();
+</script>

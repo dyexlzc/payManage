@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <title>科研经费管理</title>
+        <link rel="stylesheet" type="text/css" href="./css/aui.css" />
+        <style type="text/css">
+        #demo {
+            width: 4rem;
+            height: 4rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -2rem;
+            margin-top: -2rem;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            line-height: 4rem;
+            text-align: center;
+            color: #212121;
+            font-size: 1.2rem;
+        }
+        </style>
+        <script type="text/javascript" src="./script/api.js"></script>
+        <script type="text/javascript" src="./script/aui-tab.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    
+    <body>
+        <script>
+            function ChangeTitle(str){//全局函数，改变标题
+                vm1.$data.title = str;
+            }
+        
+           
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <header class="aui-bar aui-bar-nav aui-bar-light" id="header">
+            <div class="aui-title" id="title">{{ title }}</div>
+            <div id='toggle'>
+                <div class="aui-col-xs-3 aui-pull-right" v-on:click="Mnew" id='new'> <i class="aui-iconfont aui-icon-plus aui-btn" style="font-size:15px">&nbsp;新建</i>
+                </div>
+                <div @click="addattr" style='display:none' class="aui-col-xs-3 aui-pull-right" id='newattr'> <i class="aui-iconfont aui-icon-plus aui-btn" style="font-size:15px">&nbsp;添加</i>
+                </div>
+            </div>
+            <div class="aui-col-xs-3 aui-pull-left" style="display:none;" v-on:click="back" id="btnBack"> <i class="aui-iconfont aui-icon-left aui-btn" style="font-size:15px">返回</i>
+            </div>
+        </header>
+        <footer class="aui-bar aui-bar-tab" id="footer">
+            <div class="aui-bar-tab-item aui-active" tapmode> <i class="aui-iconfont aui-icon-home"></i>
+                <div class="aui-bar-tab-label">项目</div>
+            </div>
+            <div class="aui-bar-tab-item" tapmode>
+                <div class="aui-dot"></div> <i class="aui-iconfont aui-icon-my"></i>
+                <div class="aui-bar-tab-label">我的</div>
+            </div>
+        </footer>
+        <!--页面管理 罗 3-8/9:40-->
+        <div id="content" style='margin-bottom:50px'></div>
+        <!--主页面-->
+        <div id="mine" style="display:none;margin-bottom:50px"></div>
+        <!--我的 页面-->
+        <div id="Mnew" style="display:none;margin-bottom:50px"></div>
+        <!--新建 页面-->
+        <div id="detail" style="display:none;margin-bottom:50px"></div>
+        <!--详细 页面-->
+        <div id="Madd" style="display:none;margin-bottom:50px"></div>
+       <script src="./laydate/laydate.js"></script>
+       <script type="text/javascript">
+        $.get("pg1.html", {}, function (result) {
+            $("#content").html(result); //获得首页
+        });
+        $.get("pg2.html", {}, function (result) {
+            $("#mine").html(result); //获得我的页面
+        });
+        var vm1 = new Vue({
+            el: "#header",
+            data: {
+                title: "项目列表",
+            },
+            methods: {
+                Mnew: function () {//新建项目按钮的逻辑
+                    $(location).attr('href', './createNew.html');
+                },
+                back:function(){ //返回按钮的逻辑
+                    $("#btnBack").toggle();//按下就表示返回到首页，pgDetail隐藏
+                    $("#detail").hide(); //切换页面
+                    $("#content").show();
+                    $('#new').show('slow');
+                    $('#newattr').hide('slow');
+                    ChangeTitle("项目列表");
+                },
+                
+                addattr:function(){
+                   // alert("hello world!");
+                     $("#detail").hide(); //切换页面
+                     $.get("add.html", {}, function (result) {
+                        $("#Madd").html(result); //获得添加页面
+                        $("#Madd").show();
+                        $("#btnBack").hide();
+                        $("#newattr").hide();
+                    });
+                }    
+            }
+        })
+
+         apiready = function () {
+            api.parseTapmode();
+        }
+       tab = new auiTab({
+            element: document.getElementById("footer")
+        }, function (ret) {
+            console.log(tab);
+            switch (ret.index) {
+            case 1:
+                {
+                    $("#Madd").hide();
+                    $("#content").show();
+                    $("#mine").hide(); //切换页面
+                    $("#detail").hide(); //切换页面
+                    $('#newattr').hide('slow');
+                    ChangeTitle( "项目列表");
+                    $('#new').show('slow');
+                    //$('#header').css("background-color", "#ffffff");
+                    //$('#title').css("color", "#63B8FF");
+                    break;
+                }
+            case 2:
+                {
+                    $("#Madd").hide();
+                    $("#btnBack").hide();
+                    $("#content").hide();
+                    $("#mine").show(); //切换页面
+                    $("#detail").hide(); //切换页面
+                    $('#newattr').hide();
+                    ChangeTitle("个人中心");
+                    $('#new').hide();
+                    //$('#header').css("background-color", "#C6E2FF");
+                    //$('#title').css("color", "#ffffff");
+                    break;
+                }
+            }
+        });
+        </script>
+    </body>
+
+</html>

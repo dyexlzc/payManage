@@ -1,0 +1,476 @@
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>项目新建</title>
+        <style>
+        [v-cloak] {
+            display: none;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <ul v-cloak class="breadcrumb" style='background-color:#87CEFF;height:30px' id='header'>
+            <li id='rt'><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a>
+
+            </li>
+            <li><a href="#">首页</a>
+
+            </li>
+            <li class="active">{{ date }}</li>
+        </ul>
+        <div id="dataBlock">
+            <!--dataBlock新建为Vue实例，可以在data中统一获取value-->
+            <div style='margin-top:10px;margin-left:15px;margin-right:15px;display:none' id='show'>
+                <form class="bs-example bs-example-form" role="form">
+                    <div class="row">
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	
+                            <span class="input-group-addon">
+						
+						项目名称
+						
+					    </span>
+
+                                <input type="text" class="form-control" v-model="ProjectName">
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	<span class="input-group-addon">
+						
+						项目描述
+						
+					</span>
+
+                                <input type="text" class="form-control" v-model="ProjectDesc">
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	<span class="input-group-addon">
+						
+						项目类型
+						
+					</span>
+
+                                <select class="form-control" v-model="ProjectType">
+                                    <option>国家级</option>
+                                    <option>省部级</option>
+                                    <option>市/校级</option>
+                                    <option>横向</option>
+                                    <option>其他</option>
+                                </select>
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	<span class="input-group-addon">
+					
+						项目经费
+						
+					</span>
+
+                                <input id='money' type="number" class="form-control" v-model="ProjectMoney" />
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	<span class="input-group-addon">
+						
+						开始时间
+					
+					</span>
+
+                                <input type="text" id="startTime" class="form-control" v-model="ProjectTime_start" />
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                        <div class="col-lg-6" style='margin-bottom:5px'>
+                            <div class="input-group">	<span class="input-group-addon">
+						
+						截止时间
+					
+					</span>
+
+                                <input type="text" id="endTime" class="form-control" v-model="ProjectTime_end" />
+                            </div>
+                            <div style='border-bottom:dashed 1px #EEE5DE;padding-top:5px'></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div style='margin-left:15px;margin-right:15px;position:relative;top:-10px;display:none' id='detail'>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion"
+				         href="#collapse">
+    				        <p style='text-align:center;color:#EE2C2C' id='pull'>
+    				            项目经费预算
+    				            <span class="glyphicon glyphicon-chevron-down" style='margin-left:3px' ></span>
+    				        </p>
+			            </a>
+			            </h4>
+
+                        </div>
+                        <div id="collapse" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <form class="bs-example bs-example-form" role="form">
+                                    <div class="row">
+                                        <!--按钮选择添加经费-->
+                                        <div class="col-xs-8" >经费预算添加</div>
+                                        <div class="col-xs-4" >
+                                            <div class="btn-group" style="display:relative;left:-20px">
+                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">经费选择 <span class="caret"></span>
+
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <!--下拉菜单建议使用v-for生成，因为可以在JS代码中动态的修改-->
+                                                    <li v-for="dType,index in Types" @click="addLi(index,dType)" v-bind:id="'d_'+index"> <a>{{ dType }}</a>
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div id="parent_html">
+                                        <!--具体经费的占位符-->
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;margin-bottom:20px" id='submit' @click="submit">
+                <a href="#" class="btn btn-info btn-lg"> <span class="glyphicon glyphicon-ok"></span> 提交</a>
+            </div>
+        </div>
+        <script src="./laydate/laydate.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script type="text/javascript" src="./script/api.js"></script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+
+        $(document).ready(function () {
+            //在页面加载完毕后再新建Vue实例，因为data控件需要等待渲染
+            dataBlock = new Vue({
+                el: "#dataBlock",
+                data: {
+                    ProjectName: "",
+                    ProjectDesc: "",
+                    ProjectType: "",
+                    ProjectMoney: "",
+                    ProjectTime_start: "",
+                    ProjectTime_end: "",
+                    Types: ["设备费", "材料费", "交通费", "知识产权事务费", "会议/差旅交流费", "劳务费", "自定义添加"],
+                    //存入数据库以明文好了
+                    idItemOther: [], //其他经费的id
+                    listTypeId: [], //保存了已经点击的经费列表，必须填写
+                    listTypeNumId: []
+                },
+                methods: {
+                    generateLi: function (id, name) {
+
+                    },
+                    submit: function () {
+                        console.log("submit has been clicked");
+                        //提交的时候检查所有输入框
+                        console.log(this.idItemOther);
+                        console.log(this.listTypeId);
+                        
+                        
+                        //遇到控制直接提示+返回,避免无意义的检查
+                        if (this.ProjectName == "") {
+                            alert("请检查项目名称填写是否完整");
+                            return;
+                        }
+                        if (this.ProjectDesc == "") {
+                            alert("请检查项目描述填写是否完整");
+                            return;
+                        }
+                        if (this.ProjectType == "") {
+                            alert("请检查项目类型填写是否完整");
+                            return;
+                        }
+                        if (this.ProjectMoney == "") {
+                            alert("请检查总经费内容填写是否完整");
+                            return;
+                        }
+                        if (this.ProjectTime_start == "") {
+                            alert("请检查开始时间内容填写是否完整");
+                            return;
+                        }
+                        if (this.ProjectTime_end == "") {
+                            alert("请检查结束时间内容填写是否完整");
+                            return;
+                        }
+                        for (var vp in this.idItemOther) {
+                            if($("#"+this.idItemOther[vp].title).val()==""||$("#"+this.idItemOther[vp].money).val()==""){
+                                alert("请检查其他经费内容填写是否完整");
+                                return;
+                            }
+                        }
+                        for (var vp in this.listTypeId) {
+                            if($("#"+this.listTypeId[vp]).val()==""){
+                                alert("请检查经费内容填写是否完整");
+                                return;
+                            }
+                        }
+                        //输入检查完毕，开始向后台POST数据
+                        //格式化内容成为json对象传递给后台
+                        var varPost={};//post到后台的数据
+                        var varCost={};//具体项目的经费预算
+                        //varPost['aaa']='bbb';
+                        varPost['ProjectName']=this.ProjectName;
+                        varPost['ProjectDesc']=this.ProjectDesc;
+                        varPost['ProjectType']=this.ProjectType;
+                        varPost['ProjectMoney']=this.ProjectMoney;
+                        varPost['ProjectTime_start']=this.ProjectTime_start;
+                        varPost['ProjectTime_end']=this.ProjectTime_end;
+                        
+                        //varCost.push({"aaa":"bbb"});
+                        for(var vp in this.listTypeNumId){//显示固定项目的经费
+                           // console.log("id为:"+this.listTypeNumId[vp]);
+                           // console.log( this.Types[this.listTypeNumId[vp]] +":"+$("#pDetailInput_"+this.listTypeNumId[vp]).val());
+                           //varCost.push({
+                           varCost[vp]={};
+                           varCost[vp]['title']=this.Types[this.listTypeNumId[vp]];
+                           varCost[vp]['premoney']=$("#pDetailInput_"+this.listTypeNumId[vp]).val();
+                           varCost[vp]['costlists']=[];//保存每一笔详细
+                           //})
+                        }
+                        for(var vp in this.idItemOther){//显示自定义项目的经费
+                           // console.log("标题为:"+$("#"+this.idItemOther[vp].title).val()   );
+                            //console.log("经费为:"+$("#"+this.idItemOther[vp].money).val()   );
+                            varCost[vp]={};
+                            varCost[vp]['title']=$("#"+this.idItemOther[vp].title).val();
+                            varCost[vp]['premoney']=$("#"+this.idItemOther[vp].money).val();
+                            varCost[vp]['costlists']=[];//保存每一笔详细
+                           
+                        }
+                        
+                        
+                       // varPost["varCost"]=varCost;
+                        //console.log(varPost);
+                        
+                        //数据组合完成后往后台发送，存入数据库中的costType字段中
+                        $.post("post/project/New_project.php",{pJson:JSON.stringify(varPost),pCost:JSON.stringify(varCost)},function(result){
+                            console.log(result);
+                            alert('项目新建成功！');
+                            $(location).attr('href','main.html');
+                        })
+                       
+                    },
+                    addLi: function (id, strType) { //下拉菜单的逻辑，点击一次将会动态增加一条经费记录
+                        console.log("点击ID ： "+id);
+                        //点击的时候判断是否被禁用，如果不被禁用再继续,禁用的状态使用disabled的class
+                        if (!$("#d_" + id).hasClass("disabled")) {
+                            if (strType != "自定义添加") {
+                                var tdiv = document.createElement("div");
+                                tdiv.innerHTML = '<div class="row" style="padding:10px;position:relative;left:-15px" id="pDetail_' + id +
+                                    '">\
+                                                <div class="col-xs-10">\
+                                                    <div class="input-group" ><span class="input-group-addon" id="basic-addon1">' +
+                                    strType +
+                                    '</span>\
+                                                        <input type="number" id="pDetailInput_' +
+                                    id +
+                                    '" class="form-control" placeholder="输入经费" aria-describedby="basic-addon1">\
+                                                    </div>\
+                                                </div>\
+                                                <div class="col-xs-2">\
+                                                    <button id="btnDel_' +
+                                    id +
+                                    '" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
+                                                        删除\
+                                                    </button>\
+                                                </div>\
+                                            </div>';
+                                $("#parent_html")[0].appendChild(tdiv);
+
+                                //this.listTypeId.push("pDetailInput_" + id); //将输入框的id存放
+                                this.listTypeNumId.push( id );
+                                $("#d_" + id).addClass("disabled");
+                                
+                                //修改值
+                                $("#btnDel_" + id).click( //删除经费项目的btn，独立绑定
+                                    function () {
+                                        //alert(id);
+                                        $("#pDetail_" + id).remove();
+                                         /*dataBlock.$data.listTypeId.splice(function(){
+                                            for (var vp in dataBlock.$data.listTypeId) {
+                                                if (dataBlock.$data.listTypeId[vp] == ("pDetailInput_" + id)) {
+                                                    return vp; //找到位置直接返回
+                                                }
+                                            }
+                                            return -1;//一定是会找到的。。。肯定不存在-1的情况 
+                                         },1);//从列表中删除标识的ID
+                                         */
+                                         /*console.log("删除id:"+id);
+                                         console.log("before");
+                                         console.log( dataBlock.$data.listTypeNumId);*/
+                                         for (var vp in dataBlock.$data.listTypeNumId) {
+                                                parseInt(dataBlock.$data.listTypeNumId[vp])==id?dataBlock.$data.listTypeNumId.splice(vp,1):true;
+                                         }
+                                         /*console.log("after");
+                                         console.log( dataBlock.$data.listTypeNumId);*/
+                                        $("#d_" + id).removeClass("disabled"); //恢复属性
+                                });
+                            } else { //如果是其他支出，则显示文本框给予用户输入
+                                var tdiv = document.createElement("div");
+                                var randomStr = Math.random().toString(36).substr(2);
+                                tdiv.innerHTML = '<div class="row" style="padding:10px;position:relative;left:-15px" id="pDetailOther_' + randomStr +
+                                    '">\
+                                                <div class="col-xs-10">\
+                                                    <div class="input-group" >\
+                                                        <span class="input-group-addon" style="padding:0px">\
+                                                            <input id="inputOther_' +
+                                    randomStr +
+                                    '" style="width:60px" type="text"  >\
+                                                        </span>\
+                                                        <input type="number" id="pDetailOtherInput_' +
+                                    randomStr +
+                                    '" class="form-control" placeholder="输入经费" aria-describedby="basic-addon1">\
+                                                    </div>\
+                                                </div>\
+                                                <div class="col-xs-2">\
+                                                    <button id="btnDelOther_' +
+                                    randomStr +
+                                    '" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
+                                                        删除\
+                                                    </button>\
+                                                </div>\
+                                            </div>';
+                                //this.idNameItemOther.push("inputOther_"+randomStr);//将自定义的经费名称也一并存入
+                                this.idItemOther.push({
+                                    title: "inputOther_" + randomStr,
+                                    money: "pDetailOtherInput_" + randomStr
+                                }); //将生成的randomInput储存
+                                
+                                $("#parent_html")[0].appendChild(tdiv);//往页面追加内容
+                                
+                                $("#btnDelOther_" + randomStr).click(function () {//给删除按钮添加逻辑
+                                    $("#pDetailOther_" + randomStr).remove();
+                                    
+                                    
+                                    console.log("before");
+                                    console.log(dataBlock.$data.idItemOther);
+                                    //删除按钮同时需要删除idItemOther中的内容
+                                    for (var vp in dataBlock.$data.idItemOther) {
+                                          //console.log(dataBlock.$data.idItemOther[vp].title);
+                                          dataBlock.$data.idItemOther[vp].title=="inputOther_"+randomStr?dataBlock.$data.idItemOther.splice(vp,1):true;
+                                    }
+                                    console.log("after");
+                                    console.log(dataBlock.$data.idItemOther);
+                                });
+                            }
+
+                        }
+                    },
+
+                },
+
+            })
+            var app = new Vue({ //控制页头返回区域的Vue实例，包含时间的动态更新
+                el: '#header',
+                data: {
+                    date: ''
+                },
+                methods: {
+
+                }
+            });
+
+            function changeDate() {
+                var date = new Date();
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                var d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var i = date.getMinutes();
+                i = i < 10 ? ('0' + i) : i;
+                var s = date.getSeconds();
+                s = s < 10 ? ('0' + s) : s;
+                return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s;
+            };
+            var now = changeDate();
+            app.date = now;
+            setInterval(function () {
+                app.date = changeDate();
+            }, 1000);
+            var startTime = laydate.render({
+                elem: '#startTime',
+                type: 'datetime',
+                min: '1935-12-31 12:30:00',
+                max: '3055-12-31 12:30:00',
+                done: function (value, date, endDate) {
+                    dataBlock.$data.ProjectTime_start = value; //回调更新值
+                    endLayDate.config.min = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds + 1
+                    };
+                },
+            });
+            var endLayDate = laydate.render({
+                elem: '#endTime',
+                type: 'datetime',
+                min: now,
+                max: '2055-12-31 12:30:00',
+                btns: ['clear', 'confirm'], //clear、now、confirm
+                done: function (value, date, endDate) {
+                    dataBlock.$data.ProjectTime_end = value; //回调更新值
+                    //alert(value);
+                    startTime.config.max = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds - 1
+                    };
+                },
+            });
+
+            $('#show').slideDown('slow');
+            $('#money').blur(function () {
+
+            });
+            $('#detail').fadeIn(1900);
+
+            /*$('#submit').click(function () { //新建按钮的逻辑，方便后期的修改，因为经费，描述等文件很容易使用Vue的v-model属性一并提交
+            alert('项目新建成功!');
+            $(location).attr('href', './main.html');
+        });*/
+
+            $('#rt').click(function () {
+                $(location).attr('href', './main.html');
+            });
+            $('#pull').click(function () {
+                $(this).find('span').toggleClass('glyphicon-chevron-down');
+                $(this).find('span').toggleClass('glyphicon-chevron-up');
+            });
+
+
+
+
+        });
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,743 @@
+<div style='margin:10px' id='detail'>
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-media-list">
+            <li class="aui-list-item aui-list-item-arrow" style='border-bottom:solid 1px #E8E8E8'>
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" v-text="'项目组长：'+headman"></div>
+                            <div class="aui-list-item-right" v-text="'起始日期:'+startdate"></div>
+                        </div>
+                        <div class="aui-list-item-text aui-ellipsis-2">
+                            &nbsp;
+                            <div class="aui-list-item-right" v-text="'截止日期:'+enddate"></div>
+                        </div>
+                        <div class="aui-list-item-text aui-ellipsis-2">
+                            项目描述：{{des}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('1')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="./image/1.jpg" class='aui-img-round'>
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>设备费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+preshebei"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{hasshebei}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{reshebei}}</div>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                    <div class="aui-content aui-margin-b-15" id='hide1' style='display:none'>
+                        <template v-for="item,index in totalshow1">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+    
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('2')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>材料费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+precailiao"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{hascailiao}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{recailiao}}</div>
+                    </div>
+                    <div class="aui-list-item-media">
+                        <img src="./image/2.jpg" class='aui-img-round'>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                <div class="aui-content aui-margin-b-15" id='hide2' style='display:none'>
+                        <template v-for="item,index in totalshow2">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('3')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="./image/3.jpg" class='aui-img-round'>
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>测试化验费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+preceshi"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{hasceshi}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{preceshi}}</div>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                
+                 <div class="aui-content aui-margin-b-15" id='hide3' style='display:none'>
+                        <template v-for="item,index in totalshow3">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+      
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('4')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>燃料动力费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+preranliao"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{hasranliao}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{reranliao}}</div>
+                    </div>
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552287640036&di=88019c5881638ac368c9235cdee87ed8&imgtype=0&src=http%3A%2F%2Fp0.so.qhmsg.com%2Ft0134910db0f226e0df.png" class='aui-img-round'>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                 <div class="aui-content aui-margin-b-15" id='hide4' style='display:none'>
+                        <template v-for="item,index in totalshow4">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+         
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('5')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552287696564&di=d03bbdbc3d1d32955c9265d8cbc8d4a9&imgtype=0&src=http%3A%2F%2Fimage.tupian114.com%2F20140422%2F14243489.png" class='aui-img-round'>
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>知识产权费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+prechanquan"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{haschanquan}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{rechanquan}}</div>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                
+                 <div class="aui-content aui-margin-b-15" id='hide5' style='display:none'>
+                        <template v-for="item,index in totalshow5">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+      
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('6')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>差旅会议费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+prechailv"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经开支：{{haschailv}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{rechailv}}</div>
+                    </div>
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552287856029&di=9d0e76d26859fe0f45e717c0f3901cfa&imgtype=0&src=http%3A%2F%2Fimage.tupian114.com%2F20140422%2F14241720.png" class='aui-img-round'>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                 <div class="aui-content aui-margin-b-15" id='hide6' style='display:none'>
+                        <template v-for="item,index in totalshow6">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>开支记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+      
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>开支金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('7')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552287949002&di=dec1de3de23ecd1577dca5c088931e9d&imgtype=0&src=http%3A%2F%2Fcmsfile01.chinaso.com%2Fgroup1%2FM00%2F15%2FF4%2FCgqg2FS0YYuAax5lAAC586_KyL4717.png" class='aui-img-round'>
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>劳务费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+prelaowu"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经花销：{{haslaowu}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{relaowu}}</div>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                
+               <div class="aui-content aui-margin-b-15" id='hide7' style='display:none'>
+                        <template v-for="item,index in totalshow7">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>花销记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-my"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销人员：{{item.person}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('8')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>专家咨询费</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+prezixun"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经花销：{{haszixun}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{rezixun}}</div>
+                    </div>
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552287921749&di=5a79fdb4791d2629d99f964ed39d2983&imgtype=0&src=http%3A%2F%2Fp0.so.qhmsg.com%2Ft01055fece3910963df.png" class='aui-img-round'>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                
+                 <div class="aui-content aui-margin-b-15" id='hide8' style='display:none'>
+                        <template v-for="item,index in totalshow8">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>花销记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-my"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销人员：{{item.person}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+                
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8' @click="showdetail('9')">
+                <div class="aui-media-list-item-inner">
+                    <div class="aui-list-item-media">
+                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552882784&di=4eae904e2c060fe8153ccfd62edecd53&imgtype=jpg&er=1&src=http%3A%2F%2Fimage.tupian114.com%2F20140422%2F14224616.png" class='aui-img-round'>
+                    </div>
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-text">
+                            <div class="aui-list-item-title" style='font-weight:bold'>其他费用</div>
+                            <div class="aui-list-item-right" v-text="'预算:'+preqita"></div>
+                        </div>
+                        <div class="aui-list-item-text" style='font-size:12px;margin-top:3px'>已经花销：{{hasqita}}</div>
+                        <div class="aui-list-item-text" style='font-size:12px'>剩余经费：{{reqita}}</div>
+                    </div>
+                </div>
+                <div class="aui-info" style="padding-top:0">
+                    <div class="aui-info-item"> <i class="aui-iconfont aui-icon-more"></i><span class="aui-margin-l-5"></span>
+
+                    </div>
+                    <div class="aui-info-item" style="font-size:11px">点击查看详情</div>
+                </div>
+                
+                 <div class="aui-content aui-margin-b-15" id='hide9' style='display:none'>
+                        <template v-for="item,index in totalshow9">
+                        <ul class="aui-list aui-list-in">
+                            <li class="aui-list-header" style='font-weight:bold'>花销记录{{index+1}}</li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-date"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销时间：{{item.time}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-my"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销人员：{{item.person}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-pencil"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销记录：{{item.summary}}</div>
+                                </div>
+                                
+                            </li>
+                            <li class="aui-list-item">
+                                <div class="aui-list-item-label-icon"> <i class="aui-iconfont aui-icon-cart"></i>
+                                <div class="aui-list-item-inner" style='margin-left:5px;font-size:11px'>花销金额：{{item.money}}</div>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                        </template>
+                    </div>
+                
+            </li>
+             <li class="aui-list-item" style='border-bottom:solid 1px #E8E8E8;margin-top:5px' @click="cancelitem">
+                <div class="aui-media-list-item-inner" style='height:80px;display:flex;justify-content:center' >
+                    <img  style='height:40px;width=:40px' src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552481878191&di=fdc739aba406ce96475b38a8f7b6e19d&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F00%2F87%2F20%2F58dafaf531804_610.jpg" class='aui-img-round'>
+                </div>
+              </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript" src="./script/aui-dialog.js"></script>
+<script>
+var dialog = new auiDialog({});
+console.log(app.$data.items);
+ChangeTitle(app.$data.items[app.$data.current_id - 1].title);
+$("#btnBack").toggle(); //显示返回按钮
+var detail = new Vue({
+    el: '#detail',
+    data: {
+        totalshow1: [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+
+            },
+            {
+                    money: '800', //花费金额
+                    time: '2019-03-04', //花费时间
+                    summary: '......', //花费备注
+ 
+            }
+
+        ]   ,
+      
+        totalshow2: [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+      
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+             
+            }
+        ],
+    
+        totalshow3: [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            }
+        ]
+            ,
+        
+       totalshow4:  [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+              
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                  
+            }
+        ]
+            ,
+     totalshow5:    [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                 
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                  
+            }
+        ]
+            ,
+       totalshow6:  [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                    
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            }
+        ]
+            ,
+         totalshow7: [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            }
+        ]
+            ,
+         totalshow8: [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                  
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+                   
+            }
+        ]
+            ,
+        totalshow9:  [
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+             
+            },
+                {
+                    money: '1200', //花费金额
+                    time: '2019-03-01', //花费时间
+                    summary: '......', //花费备注
+              
+            }
+        ],
+        headman: '1111', //组长
+        des:"这是项目的描述这是项目的描述这是项目的描述这是项目的描述这是项目的描述",
+        startdate: '2019-03-01', //创建日期
+        enddate: '2019-03-30', //截止日期
+        members: "a,b,c", //小组成员
+        preshebei: '1000', //设备预算
+        hasshebei: '800', //设备已经花销
+        precailiao: '1200', //材料预算
+        hascailiao: '900', //材料花销
+        preceshi: '1200', //测试预算
+        hasceshi: '900', //测试花销
+        preranliao: '1200', //燃料预算
+        hasranliao: '900', //燃料花销
+        prechanquan: '1200', //产权预算
+        haschanquan: '900', //产权花销
+        prechailv: '1200', //差旅预算
+        haschailv: '900', //差旅花销
+        prelaowu: '1200', //劳务预算
+        haslaowu: '900', //劳务花销
+        prezixun: '1200', //咨询预算
+        haszixun: '900', //咨询花销
+        preqita: '1200', //其他预算
+        hasqita: '900' //其他花销
+
+
+    },
+    computed: {
+        reshebei: function () {
+            return this.preshebei - this.hasshebei //设备剩余
+        },
+        recailiao: function () {
+            return this.precailiao - this.hascailiao
+        },
+        receshe: function () {
+            return this.preceshi - this.hasceshi
+        },
+        reranliao: function () {
+            return this.preranliao - this.hasranliao
+        },
+        rechanquan: function () {
+            return this.prechanquan - this.haschanquan
+        },
+        rechailv: function () {
+            return this.prechailv - this.haschailv
+        },
+        relaowu: function () {
+            return this.prelaowu - this.haslaowu
+        },
+        rezixun: function () {
+            return this.prezixun - this.haszixun
+        },
+        reqita: function () {
+            return this.preqita - this.hasqita
+        }
+
+    },
+    methods: {
+        showdetail: function (type) {
+            switch (type) {
+            case '1':
+                $('#hide1').slideToggle('slow');
+                break;
+            case '2':
+                $('#hide2').slideToggle('slow');
+                break;
+            case '3':
+                $('#hide3').slideToggle('slow');
+                break;
+            case '4':
+                $('#hide4').slideToggle('slow');
+                break;
+            case '5':
+                $('#hide5').slideToggle('slow');
+                break;
+            case '6':
+                $('#hide6').slideToggle('slow');
+                break;
+            case '7':
+                $('#hide7').slideToggle('slow');
+                break;
+            case '8':
+                $('#hide8').slideToggle('slow');
+                break;
+            case '9':
+                $('#hide9').slideToggle('slow');
+                break;
+
+            }
+        },
+        cancelitem:function(){
+            var rs=confirm("您确定要删除此项目吗？");
+            if(rs){
+                alert("您已经成功删除此项目!");
+                    
+                    app.$data.items.splice(app.$data.current_list_id, 1);
+                    $("#btnBack").toggle();//按下就表示返回到首页，pgDetail隐藏
+                    $("#detail").hide(); //切换页面
+                    $("#content").show();
+                    $('#new').show('slow');
+                    $('#newattr').hide('slow');
+                    ChangeTitle("项目列表");
+            }
+        }
+    }
+
+});
+</script>

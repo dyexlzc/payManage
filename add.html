@@ -1,0 +1,357 @@
+<div id='addattr'>
+    <div class="aui-content aui-margin-b-15" style='margin-top:15px'>
+            <ul class="aui-list aui-select-list">
+                <li class="aui-list-item">
+                    <div class="aui-list-item-inner" style='display:flex;justify-content:center'>
+                        <label style='margin-right:8px'>
+                            <input v-model='choose' class="aui-radio" type="radio" name='bt' value='grouper'>&nbsp;新增开支分类</label>
+                        <label style='margin-left:8px'>
+                            <input v-model='choose' class="aui-radio" type="radio" name='bt' value='money'>&nbsp;新建开支记录</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id='newgr' style='display:none;margin-left:5px;margin-right:5px'>
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-form-list">
+                    <li class="aui-list-item" >
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label" style='font-size:15px'>请输入开支名称</div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label" style='display:flex;justify-content:center'> <i class="aui-iconfont aui-icon-calendar">：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input v-model='itemName'  class="form-control" />
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item" >
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label" style='font-size:15px'>请输入开支预算</div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label" style='display:flex;justify-content:center'> <i class="aui-iconfont aui-icon-cart">：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input v-model='itemPrecost' onkeyup="value=value.replace(/[^\d\.]/g,'')" onblur="value=value.replace(/[^\d\.]/g,'')" class="form-control" />
+                            </div>
+                        </div>
+                    </li>
+                         <li class="aui-list-item">
+                        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                            <div @click='submitAddType' class="aui-btn aui-btn-info aui-margin-r-5" style="height:35px;width:70px;font-size:20px">提交</div>
+                            <div class="aui-btn aui-btn-danger aui-margin-l-5"  @click="back" style="height:35px;width:70px;font-size:20px">返回</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id='newmy' style='display:none;margin-left:5px;margin-right:5px'>
+            <div class="aui-content aui-margin-b-15">
+                <ul class="aui-list aui-form-list">
+                     <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label"> <i class="aui-iconfont aui-icon-question" style='font-size:13px'>&nbsp;&nbsp;开支去处：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <select v-model="sOptionEd"><!--从-->
+                                      <option v-for="option in options" >
+                                        {{ option.title }}
+                                      </option>
+                                </select>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label"> <i class="aui-iconfont aui-icon-date" style='font-size:13px'>&nbsp;&nbsp;开支时间：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input type="text" id="costTime" v-model="sCostTime">
+                            </div>
+                        </div>
+                    </li>
+                    
+                    <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label"> <i class="aui-iconfont aui-icon-pencil" style='font-size:13px'>&nbsp;&nbsp;开支备注：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input type="text" v-model="sCostSummary"> 
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item" style='border-bottom:solid 1px #FAF0E6'>
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-label"> <i class="aui-iconfont aui-icon-cart" style='font-size:13px'>&nbsp;&nbsp;开支金额：</i>
+
+                            </div>
+                            <div class="aui-list-item-input">
+                                <input type="number" class="form-control" v-model="sCostMoney"/>
+                            </div>
+                        </div>
+                    </li>
+                         <li class="aui-list-item">
+                        <div class="aui-list-item-inner aui-list-item-center aui-list-item-btn">
+                            <div  @click='submit' class="aui-btn aui-btn-info aui-margin-r-5"  style="height:35px;width:70px;font-size:20px">提交</div>
+                            <div class="aui-btn aui-btn-danger aui-margin-l-5"  @click="back" style="height:35px;width:70px;font-size:20px">返回</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+       
+            var newapp = new Vue({
+                el: '#addattr',
+                data: {
+                    itemName:'', //新增开支分类
+                    itemPrecost:'',//新建开支分类预算
+                    choose: 'grouper',
+                    sOptionEd:'',//当前已选中的option,花销类型
+                    options: [],//新建项目时设定的开销种类
+                    //////////////////////
+                    sCostTime:"",//花销时间
+                    //sCostPenple:"",//花销人员
+                    sCostSummary:"",//花销备注
+                    sCostMoney:""//花销金额
+                    
+                },
+                methods:{
+                  back:function(){
+                      $("#btnBack").show();
+                      $("#newattr").show();
+                      $("#Madd").hide();
+                      $("#detail").show(); //切换页面
+                  } ,
+                  getCount:function(){
+                    var count=0;
+                    for(var vp in detail.$data.prolists){
+                        count++;
+                    }
+                    return count;
+                  },
+                  submitAddType:function(){
+                      //console.log(this.itemName);
+                      //console.log(detail.$data.prolists);
+                      var tempItem=new Object();
+                      tempItem["title"]=this.itemName;
+                      tempItem["premoney"]=this.itemPrecost;
+                      tempItem["hadcost"]=0;
+                      tempItem["costlists"]=[];
+                      //console.log(tempItem);
+                      var ttt = JSON.stringify(detail.$data.prolists);//转化为json字符
+                      var ttt = JSON.parse(ttt);//重新变为json对象，去除ob
+                      ttt[this.getCount()]=tempItem;
+                      //detail.$data.prolists[3]=tempItem;
+                     // detail.$data.prolists.push(tempItem)
+                      //console.log(ttt);
+                      detail.$data.prolists=ttt;//成功绕开Vue修改列表
+                      //console.log(JSON.stringify( detail.$data.prolists));
+                      $.post("post/updateDetail.php",{pJson:JSON.stringify(detail.$data.prolists),pId:app.$data.current_id },function(result){//修改列表后，提交到后台，更新数据
+                          
+                      })
+                      //从后台重新获取当前用户的project
+                        $.post("post/project/Get_project.php", function (result) {
+                                var totalP=JSON.parse(result);
+                                //hh.$data.real=totalP.name;
+                                app.$data.items=totalP.plist;
+                                //计算剩余经费
+                                for(var vp in app.$data.items){
+                                    var mSonProject=0;//统计子项目每一笔明细的经费
+                                    //console.log(vp+"号项目");
+                                    //console.log(app.$data.items[vp].costType);
+                                }
+                                console.log("更新开支列表");
+                                //console.log(app.$data.items.length);
+                                //异步获取工程信息
+                                //如果工程小于等于5则不显示查看更多，否则显示
+                                //console.log("before")    
+                                //console.log(iProject.costType);
+        
+                                //iProject=app.$data.items[app.$data.current_list_id ];//修改后，重新刷新iProject实例
+                              for(var vp in app.$data.items){  //使用current_id:项目的客观id，找到相应的Project实例
+                                if(app.$data.items[vp].id==app.$data.current_id){
+                                    iProject=app.$data.items[vp];
+                                    //ChangeTitle(iProject.title);
+                                    break;
+                                }
+                            }
+                                //console.log("after")  
+                                //console.log(iProject.costType);
+                                newapp.getCostType();//修改后，重新刷新ADD页面的select
+                                detail.computeValue();//更新经费值，这个是更新单个项目的所有开支的hadcost
+                                app.calRest();//更新首页的项目剩余经费
+                                alert("创建成功");
+                                newapp.back();
+                                
+                        });
+                      
+                  },
+                  submit:function(){
+                      //提交按钮的逻辑：update相应的数据
+                      //先push
+                      //console.log(JSON.stringify(detail.$data.prolists));
+                      console.log("当前项目已用经费"+iProject.proHadcost);//由于proHadcost是动态的，因此不用$data来访问
+                      if(parseFloat(this.sCostMoney)+parseFloat(iProject.proHadcost)>parseFloat(iProject.money)){
+                          alert("超出项目经费，无法添加，请检查晶金额");
+                      }
+                      else{
+                        for(var vp in detail.$data.prolists){
+                              if(detail.$data.prolists[vp].title==this.sOptionEd)//在title对应的开支类型中追加详细开支
+                              {
+                                  //console.log("find");//将sOptionEd和已存在的对应，将花销记录插入其中
+                                  detail.$data.prolists[vp].costlists.push({
+                                      "money":this.sCostMoney,
+                                      "time":this.sCostTime,
+                                      "summary":this.sCostSummary,
+                                      //"people":this.sCostPenple,
+                                      
+                                  });//详细开销
+                              }
+                                    
+                          }
+                          
+                          
+                          //console.log(iProject);
+                          //console.log("未加已开支:"+iProject.$data.proHadcost);
+                          alert("添加成功！");
+                          ////post到后台更新即可,前台计算经费
+                          detail.computeValue();//更新经费值，这个是更新单个项目的所有开支的hadcost
+                          app.calRest();//更新首页的项目剩余经费
+                          //console.log("更新已开支:"+iProject.$data.proHadcost);
+                          $.post("post/updateDetail.php",{pJson:JSON.stringify(detail.$data.prolists),pId:app.$data.current_id },function(result){//提交到后台，更新数据
+                              
+                          })
+                          //从后台重新获取当前用户的project,目的也是为了更新信息
+                            $.post("post/project/Get_project.php", function (result) {
+                                    var totalP=JSON.parse(result);
+                                    //hh.$data.real=totalP.name;
+                                    app.$data.items=totalP.plist;
+                                    //计算剩余经费
+                                    for(var vp in app.$data.items){
+                                        var mSonProject=0;//统计子项目每一笔明细的经费
+                                        //console.log(vp+"号项目");
+                                        //console.log(app.$data.items[vp].costType);
+                                    }
+                                    console.log("更新开支列表");
+                                    app.calRest();//更新首页的项目剩余经费
+                                    //console.log(app.$data.items.length);
+                                    //异步获取工程信息
+                                    //如果工程小于等于5则不显示查看更多，否则显示
+                                    //console.log("before")    
+                                    //console.log(iProject.costType);
+                                    for(var vp in app.$data.items){  //使用current_id:项目的客观id，找到相应的Project实例
+                                        if(app.$data.items[vp].id==app.$data.current_id){
+                                            iProject=app.$data.items[vp];
+                                            //ChangeTitle(iProject.title);
+                                            break;
+                                        }
+                                    }
+                                  
+                                    //console.log("after")  
+                                    //console.log(iProject.costType);
+                                    newapp.getCostType();//修改后，重新刷新ADD页面的select
+                                    
+                                   
+                            });
+                            
+                          console.log(this.options);
+                          $("#btnBack").show();
+                          $("#newattr").show();
+                          $("#Madd").hide();
+                          $("#detail").show(); //切换页面
+                      }
+                     
+                  },
+                  getCostType:function(){//获取项目原本的预算类型
+                      //console.log(JSON.parse(iProject.costType));
+                      this.options=JSON.parse(iProject.costType);
+                      this.sOptionEd=this.options[0]==undefined?"":this.options[0].title;//处理null的逻辑，当没有添加预算的时候处理undefined
+                  }
+                },
+                watch: {
+                    choose: function (rs) {
+                        switch (rs) {
+                        case 'grouper':
+                            $('#newmy').hide();
+                            $('#newgr').slideDown('slow');
+                            break;
+                        case 'money':
+                            $('#newgr').hide();
+                            $('#newmy').slideDown('slow');
+                            break;
+                        };
+                    }
+                }
+            });
+            newapp.getCostType();
+            function nowDate() {
+                var date = new Date();
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                var d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                var h = date.getHours();
+                h = h < 10 ? ('0' + h) : h;
+                var i = date.getMinutes();
+                i = i < 10 ? ('0' + i) : i;
+                var s = date.getSeconds();
+                s = s < 10 ? ('0' + s) : s;
+                return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s;
+            };
+            var now = nowDate();
+            var costTime = laydate.render({
+                elem: '#costTime',
+                type: 'datetime',
+                min: '1935-12-31 12:30:00',
+                max: '3055-12-31 12:30:00',
+                done: function (value, date, endDate) {
+                    //更新回调值
+                    newapp.$data.sCostTime=value;
+                    endCostDate.config.min = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds + 1
+                    };
+                },
+            });
+            var endCostDate = laydate.render({
+                elem: '#endCostTime',
+                type: 'datetime',
+                min: now,
+                max: '2099-12-31 12:30:00',
+                btns: ['clear', 'confirm'], //clear、now、confirm
+                done: function (value, date, endDate) {
+                    costTime.config.max = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds - 1
+                    };
+                },
+            });
+            $('#newmy').hide();
+            $('#newgr').slideDown('slow');
+
+
+        
+        </script>
+</div>

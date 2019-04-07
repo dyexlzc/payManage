@@ -1,0 +1,119 @@
+
+<div id="Mine">
+    <div style="text-align:center;margin-bottom:0px">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551949437727&di=f37ab0d3588b4bb2ad40da1714b45e3b&imgtype=0&src=http%3A%2F%2Fpic.gerenjianli.com%2Fxiaohui2046%2Fb317.jpg" style='margin: 0 auto;width:150px; height:150px; border-radius:50%; overflow:hidden'
+        /> <i class="aui-iconfont aui-icon-home"></i>
+ <span class="aui-margin-l-5" style="font-size:15px;font-family:KaiTi;font-weight:bold;color:#969696">{{school}}</span>
+
+    </div>
+    <div style='background-color:#ffffff;position:relative;top:-9px'>
+        <div style='border-bottom:solid 1px #969696' class="aui-info aui-margin-t-10 aui-padded-l-10 aui-padded-r-10">
+            <div class="aui-info-item"> <i class="aui-iconfont aui-icon-date"></i><span class="aui-margin-l-5">最近登录时间</span>
+
+            </div>
+            <div class="aui-info-item">{{ lasttime }}</div>
+        </div>
+    </div>
+    <script src="script/Mine-school.js" type="text/javascript" charset="utf-8"></script>
+    <div class="aui-content-padded" style='position:relative;bottom:10px'>
+        <ul class="aui-list">
+            <li class="aui-list-item" style='border-bottom:solid 1px Linen'>
+                <div class="aui-list-item-inner">所属学院：信息科学与技术学院</div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px Linen'>
+                <div class="aui-list-item-inner">项目总数：{{totalpro}}</div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px Linen' @click='showdiff()'>
+                <div class="aui-list-item-inner aui-list-item-arrow">结题项目数：{{finishpro}}
+                 <div style="padding-:0px;margin:0px;width:130px;font-size:13px;color:blue">点我查看详情</div>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px Linen' >
+                
+                <div class="aui-list-item-inner aui-list-item-arrow">预警项目数：{{warnpro}}
+                      <select  v-model="couponSelected" @change="getCouponSelected" style="padding-:0px;margin:0px;width:130px;font-size:13px;color:blue">
+                            <option disabled value="">请选择</option>
+                            <option v-for='item in warnlists' v-bind:value="item.id">{{ item.title }}</option>
+                     </select>
+                </div>
+            </li>
+            <li class="aui-list-item" style='border-bottom:solid 1px Linen'>
+                <div class="aui-list-item-inner">经费余额：{{ moneyLeft }}</div>
+            </li>
+            <li class="aui-list-item"  style='height:80px'>
+                <div class="aui-list-item-inner" style='display:flex;justify-content:center;position:relative;top:-15px'>
+                   <div class="aui-btn-danger aui-btn aui-btn-info" @click="logout"><span class="aui-iconfont aui-icon-gear"></span>注销登录</div>
+               </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<script>
+app2 = new Vue({//page1使用var app;page2使用var app2;如果同名将会在post到div以后覆盖对象导致无法操作
+    el: '#Mine',
+    data: {
+        school: "",
+        lasttime: "",
+        totalpro:0,
+        warnpro:0,
+        finishpro:0,
+        moneyLeft:0,
+        couponSelected:"",
+        warnlists:[]
+    },
+    methods:{
+        logout:function(){
+            $.post("post/logout.php",{},function(result){
+               window.location.href = "index.html"; 
+            });
+        },
+        showwarn:function(){
+            alert('跳转到预警页面');
+        },
+        showdiff:function(){
+            //alert('跳转到比较页面');
+             $(location).attr('href', 'showdiff.html');
+
+           
+           
+        },
+        getCouponSelected:function(){
+            console.log("SelectedProjectId:"+this.couponSelected)
+            //couponSelected中储存的是当前选择预警项目的id
+            this.showProject(this.couponSelected)
+            
+        },
+        showProject:function(id){//显示项目
+            app.$data.current_id=id;
+            $.get("pgDetail.html",function (result) {
+                $("#detail").html(result); //获得首页
+                
+                $("#content").hide();
+                 $("#mine").hide(); 
+                 
+                $("#detail").show(); //切换页面
+                
+                //$('#new').hide('slow');
+                $('#newattr').show('slow');
+                tab.setActive(1);
+            });
+            
+        }
+       
+    }
+
+});
+
+//页面加载时进入后台获取用户全部信息
+$.post("post/getUsrInfo.php", {}, function (result) {
+    var totalP = JSON.parse(result);
+    console.log(totalP);
+    app2.$data.lasttime=totalP.lasttime;
+    //从后台获取的学校/单位的内容时一个int,需要使用script/Mine-school.js中的函数将单位转换成学校的字符串
+    app2.$data.school=transSchool(totalP.company);
+    //到时候还要改变页头LOGO，LOGO也是和company的id相对应的
+    
+});
+
+</script>
